@@ -8,7 +8,7 @@
 # already running the Plateau dev build.
 set -euo pipefail
 
-DEVICE="${DEVICE:-A3D42C81-74DE-4705-8B10-D2A2E60F24E2}"   # iPhone 17 Pro
+DEVICE="${DEVICE:-38F5A1C0-1B28-4B7F-B5E0-1E0D8B8B415F}"   # iPhone 16 Plus, 1290x2796
 HERE="$(cd "$(dirname "$0")" && pwd)"
 RAW="$HERE/.screenshots-raw"
 OUT="$HERE/../assets/img"
