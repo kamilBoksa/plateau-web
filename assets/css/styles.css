@@ -117,3 +117,100 @@ img { max-width: 100%; height: auto; display: block; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .btn:hover { transform: none; }
 }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 8px;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: #000;
+  border-radius: 8px;
+  z-index: 100;
+}
+.skip-link:focus { left: 16px; }
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+.site-header.is-stuck {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom-color: var(--surface-border);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 14px;
+}
+.site-header .btn--sm { padding: 9px 18px; font-size: 0.875rem; }
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  font-size: 0.9375rem;
+}
+.wordmark img { border-radius: 7px; }
+
+.hero {
+  position: relative;
+  padding-block: clamp(48px, 8vw, 96px) var(--section-y);
+  overflow: hidden;
+}
+/* Ambient blue wash lifted from the logo's glowing plate. */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: -20% 30% auto -10%;
+  height: 620px;
+  background: radial-gradient(closest-side, rgba(66, 133, 244, 0.16), transparent);
+  pointer-events: none;
+}
+.hero__inner {
+  position: relative;
+  display: grid;
+  gap: clamp(32px, 6vw, 72px);
+  align-items: center;
+  grid-template-columns: 1fr;
+}
+.hero__actions { display: flex; flex-wrap: wrap; gap: 12px; margin-block: 28px 20px; }
+.hero__note { color: var(--text-dim); font-size: 0.9375rem; margin: 0; }
+.hero__shot { justify-self: center; }
+
+/* Phone frame drawn in CSS — sharp at any density, no device art licensing. */
+.phone {
+  position: relative;
+  width: min(300px, 78vw);
+  padding: 10px;
+  border-radius: 44px;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(0, 0, 0, 0.6) inset;
+}
+.phone::after {
+  content: '';
+  position: absolute;
+  top: 22px; left: 50%;
+  width: 84px; height: 24px;
+  transform: translateX(-50%);
+  background: #000;
+  border-radius: 999px;
+  z-index: 2;
+}
+.phone img { border-radius: 34px; display: block; }
+
+@media (min-width: 900px) {
+  .hero__inner { grid-template-columns: 1.05fr 0.95fr; }
+  .hero__shot { justify-self: end; }
+}
