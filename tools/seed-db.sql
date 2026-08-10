@@ -68,6 +68,9 @@ INSERT INTO completed_exercises (id, name, workout_id, base_exercise_id, note, e
 SELECT 9301, 'Barbell Row', 9002, e.id, NULL, 'weight_reps' FROM exercises e
   WHERE e.user_id = :user_id AND e.name = 'Barbell Row' AND e.is_custom = 0;
 INSERT INTO completed_exercises (id, name, workout_id, base_exercise_id, note, exercise_type)
+SELECT 9304, 'Barbell Row', 9005, e.id, NULL, 'weight_reps' FROM exercises e
+  WHERE e.user_id = :user_id AND e.name = 'Barbell Row' AND e.is_custom = 0;
+INSERT INTO completed_exercises (id, name, workout_id, base_exercise_id, note, exercise_type)
 SELECT 9302, 'Barbell Row', 9008, e.id, NULL, 'weight_reps' FROM exercises e
   WHERE e.user_id = :user_id AND e.name = 'Barbell Row' AND e.is_custom = 0;
 INSERT INTO completed_exercises (id, name, workout_id, base_exercise_id, note, exercise_type)
@@ -76,6 +79,7 @@ SELECT 9303, 'Barbell Row', 9011, e.id, NULL, 'weight_reps' FROM exercises e
 
 INSERT INTO completed_sets (set_order, weight, reps, exercise_id, duration) VALUES
   (1, 60.0, 10, 9301, NULL), (2, 62.5, 9, 9301, NULL), (3, 62.5, 8, 9301, NULL),
+  (1, 62.5, 10, 9304, NULL), (2, 65.0, 9, 9304, NULL), (3, 65.0, 8, 9304, NULL),
   (1, 65.0, 10, 9302, NULL), (2, 67.5, 8, 9302, NULL), (3, 67.5, 8, 9302, NULL),
   (1, 70.0, 10, 9303, NULL), (2, 72.5, 8, 9303, NULL), (3, 72.5, 7, 9303, NULL);
 
