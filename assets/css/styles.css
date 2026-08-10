@@ -339,17 +339,6 @@ img { max-width: 100%; height: auto; display: block; }
 .price__note { color: var(--text-dim); font-size: 0.875rem; margin: 0; }
 .price--featured .badge { background: var(--accent); color: #000; }
 
-.founding {
-  margin-top: 32px;
-  padding: 20px 24px;
-  border-left: 2px solid var(--glow);
-  background: var(--surface);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  color: var(--text-dim);
-  max-width: 720px;
-}
-.founding strong { color: var(--text); }
-
 @media (min-width: 640px) {
   .prices { grid-template-columns: 1fr 1fr; }
 }
