@@ -343,6 +343,49 @@ img { max-width: 100%; height: auto; display: block; }
   .prices { grid-template-columns: 1fr 1fr; }
 }
 
+.faq { max-width: 780px; margin-top: 32px; display: grid; gap: 10px; }
+.faq details {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 12px;
+  padding: 4px 20px;
+}
+.faq summary {
+  cursor: pointer;
+  padding: 16px 0;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: '+';
+  color: var(--accent);
+  font-size: 1.25rem;
+  line-height: 1;
+  flex: none;
+}
+.faq details[open] summary::after { content: '\2212'; }
+.faq p { color: var(--text-dim); margin: 0 0 16px; }
+
+.site-footer { border-top: 1px solid var(--surface-border); padding-block: 40px; }
+.site-footer__inner { display: grid; gap: 20px; }
+.site-footer__links { display: flex; flex-wrap: wrap; gap: 24px; }
+.site-footer__links a { color: var(--text-dim); text-decoration: none; }
+.site-footer__links a:hover { color: var(--text); text-decoration: underline; }
+.site-footer__note { color: var(--text-dim); font-size: 0.875rem; margin: 0; }
+
+@media (min-width: 760px) {
+  .site-footer__inner {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+  .site-footer__links { justify-content: center; }
+}
+
 /* Must stay last: overrides motion declared anywhere above it by source
    order, not specificity, so nothing appended after this block can escape it. */
 @media (prefers-reduced-motion: reduce) {
