@@ -112,13 +112,6 @@ img { max-width: 100%; height: auto; display: block; }
 }
 .reveal.is-visible { opacity: 1; transform: none; }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .btn:hover { transform: none; }
-  .site-header { transition: none; }
-}
-
 .skip-link {
   position: absolute;
   left: -9999px;
@@ -263,4 +256,13 @@ img { max-width: 100%; height: auto; display: block; }
   .proof-bar { grid-template-columns: repeat(4, 1fr); }
   .feature__inner { grid-template-columns: 1fr 1fr; }
   .feature--reverse .feature__media { order: -1; justify-self: start; }
+}
+
+/* Must stay last: overrides motion declared anywhere above it by source
+   order, not specificity, so nothing appended after this block can escape it. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .btn:hover { transform: none; }
+  .site-header { transition: none; }
 }
