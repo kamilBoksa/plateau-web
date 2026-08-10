@@ -1,6 +1,11 @@
 -- Demo history for marketing screenshots. Fictional data only.
 -- Bind :user_id to the signed-in account's email before running.
 -- Idempotent: clears anything this script previously inserted (ids >= 9000).
+-- Safe on a missing exercise name: below, each completed_exercises row comes
+-- from an INSERT ... SELECT guarded by e.name, so an unresolved name simply
+-- inserts nothing. Any completed_sets rows that would have pointed at it are
+-- swept up by the orphan cleanup just before PRAGMA foreign_keys = ON, so a
+-- missing name yields a clean no-op rather than a silent partial seed.
 
 PRAGMA foreign_keys = OFF;
 
@@ -82,5 +87,14 @@ INSERT INTO completed_sets (set_order, weight, reps, exercise_id, duration) VALU
   (1, 62.5, 10, 9304, NULL), (2, 65.0, 9, 9304, NULL), (3, 65.0, 8, 9304, NULL),
   (1, 65.0, 10, 9302, NULL), (2, 67.5, 8, 9302, NULL), (3, 67.5, 8, 9302, NULL),
   (1, 70.0, 10, 9303, NULL), (2, 72.5, 8, 9303, NULL), (3, 72.5, 7, 9303, NULL);
+
+-- Orphan cleanup: if an exercise name above failed to resolve, its
+-- completed_exercises row above was never inserted, but the completed_sets
+-- rows for it were inserted by literal id regardless (foreign_keys is OFF
+-- for this whole script). Remove any such orphans, scoped to this script's
+-- id range so real user data can never be touched.
+DELETE FROM completed_sets
+  WHERE exercise_id >= 9000
+    AND exercise_id NOT IN (SELECT id FROM completed_exercises);
 
 PRAGMA foreign_keys = ON;

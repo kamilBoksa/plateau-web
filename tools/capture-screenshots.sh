@@ -4,12 +4,24 @@
 #
 # Procedure: seed the database first (see tools/seed-db.sql), then run this and
 # navigate to each screen when prompted.
+# Requires: cwebp (brew install webp), xcrun simctl, and a booted simulator
+# already running the Plateau dev build.
 set -euo pipefail
 
 DEVICE="${DEVICE:-A3D42C81-74DE-4705-8B10-D2A2E60F24E2}"   # iPhone 17 Pro
 HERE="$(cd "$(dirname "$0")" && pwd)"
 RAW="$HERE/.screenshots-raw"
 OUT="$HERE/../assets/img"
+
+if ! command -v cwebp >/dev/null 2>&1; then
+  echo "error: cwebp not found on PATH (install with: brew install webp)" >&2
+  exit 1
+fi
+
+if ! xcrun simctl list devices | grep -q "($DEVICE) (Booted)"; then
+  echo "error: simulator $DEVICE is not booted — boot it and launch the Plateau dev build first" >&2
+  exit 1
+fi
 
 mkdir -p "$RAW" "$OUT"
 
