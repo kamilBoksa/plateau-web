@@ -15,14 +15,21 @@ or serve the folder.
 Guards against false marketing claims, broken internal links, missing alt text,
 and malformed page metadata. CI runs it on every push.
 
-## Before launch — two replacements
+## Deploying
 
-1. **Domain.** Replace `https://PLATEAU_SITE_URL` with the real origin (no
-   trailing slash) in `index.html`, `privacy.html`, `terms.html`, `sitemap.xml`.
-2. **Contact address.** Replace `PLATEAU_CONTACT_EMAIL` with the published
-   address in all three pages.
+The site publishes from `main` via GitHub Actions
+(`.github/workflows/pages.yml`) to
+[`https://kamilboksa.github.io/plateau-web/`](https://kamilboksa.github.io/plateau-web/).
+Every push to `main` runs `tools/check.py` as a gate before the deploy job
+runs, so a push that would publish a false claim fails before it reaches
+Pages.
 
-Both are reported as `NOTE:` lines by `tools/check.py` until resolved.
+## Before launch — one remaining replacement
+
+**Contact address.** Replace `PLATEAU_CONTACT_EMAIL` with the published
+address in all three pages.
+
+This is reported as a `NOTE:` line by `tools/check.py` until resolved.
 
 ## Regenerating screenshots
 
