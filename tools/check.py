@@ -25,12 +25,15 @@ FORBIDDEN = {
     "TODO": "unfinished content",
 }
 
-# Features that are not built yet. Each may appear only inside an element
-# carrying data-status="coming".
-UNSHIPPED = ["CSV Export"]
+# Words naming features that are not built yet. Matched case-insensitively,
+# as whole words, against the page's rendered text (markup stripped) — not
+# against raw HTML, so inline tags splitting a phrase (e.g. "CSV <b>Export</b>")
+# can't slip past. Each may appear only inside an element carrying
+# data-status="coming".
+UNSHIPPED_WORDS = ["csv", "export"]
 
 # Intentional placeholders, resolved at launch and documented in the README.
-ALLOWED_TOKENS = ["PLATEAU_SITE_URL", "PLATEAU_CONTACT_EMAIL"]
+ALLOWED_TOKENS = ["PLATEAU_CONTACT_EMAIL"]
 
 # Void elements never produce an end tag, so they must not be pushed onto the
 # nesting stack — doing so desynchronises it on the first <img> in a block.
@@ -39,6 +42,17 @@ VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
 
 
 class PageParser(HTMLParser):
+    """Extracts structural facts plus a text-only view of the page.
+
+    Every open element tracks two inherited booleans on parallel stacks:
+    whether it (or an ancestor) carries data-status="coming", and whether
+    it (or an ancestor) is a <script>/<style> element whose contents are
+    not prose. Text nodes are recorded together with the "coming" flag in
+    effect at that point, so unshipped-feature matching can run against
+    rendered text — immune to markup splitting a phrase apart — while
+    still respecting the data-status="coming" allowance exactly.
+    """
+
     def __init__(self):
         super().__init__()
         self.h1_count = 0
@@ -46,10 +60,10 @@ class PageParser(HTMLParser):
         self.has_description = False
         self.images = []          # (src, alt)
         self.local_links = []     # href/src values pointing inside the repo
-        self.coming_depth = 0
-        self.coming_text = []
+        self.text_chunks = []     # (text, in_coming) for every text node
         self._in_title = False
-        self._open_coming = []
+        self._coming_stack = []
+        self._skip_stack = []
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
@@ -68,23 +82,54 @@ class PageParser(HTMLParser):
                 self.local_links.append(value)
         if tag in VOID:
             return
-        if attrs.get("data-status") == "coming":
-            self.coming_depth += 1
-            self._open_coming.append(tag)
-        elif self.coming_depth:
-            self._open_coming.append(None)
+        parent_coming = self._coming_stack[-1] if self._coming_stack else False
+        parent_skip = self._skip_stack[-1] if self._skip_stack else False
+        self._coming_stack.append(parent_coming or attrs.get("data-status") == "coming")
+        self._skip_stack.append(parent_skip or tag in ("script", "style"))
 
     def handle_endtag(self, tag):
         if tag == "title":
             self._in_title = False
-        if self._open_coming:
-            marker = self._open_coming.pop()
-            if marker is not None:
-                self.coming_depth -= 1
+        if tag in VOID:
+            return
+        if self._coming_stack:
+            self._coming_stack.pop()
+        if self._skip_stack:
+            self._skip_stack.pop()
 
     def handle_data(self, data):
-        if self.coming_depth:
-            self.coming_text.append(data)
+        if self._skip_stack and self._skip_stack[-1]:
+            return
+        in_coming = bool(self._coming_stack and self._coming_stack[-1])
+        self.text_chunks.append((data, in_coming))
+
+
+def resolves_case_sensitively(root, relative_path):
+    """Resolve relative_path under root, requiring every path segment to
+    match the on-disk name byte-for-byte.
+
+    Path.exists() defers to the host filesystem, which is case-insensitive
+    on macOS — a link to LOGO.webp would resolve locally even though the
+    real file is logo.webp. GitHub Pages serves from Linux, where that same
+    link 404s. Comparing against an exact directory listing (not just
+    asking the OS to look the name up) catches the mismatch on any host.
+    """
+    current = root
+    segments = [part for part in relative_path.split("/") if part not in ("", ".")]
+    for segment in segments:
+        if segment == "..":
+            current = current.parent
+            continue
+        if not current.is_dir():
+            return False
+        try:
+            names = {entry.name for entry in current.iterdir()}
+        except OSError:
+            return False
+        if segment not in names:
+            return False
+        current = current / segment
+    return current.exists()
 
 
 def check_page(name, failures):
@@ -115,17 +160,21 @@ def check_page(name, failures):
             failures.append(f"{name}: <img src={src!r}> has no alt text")
 
     for link in parser.local_links:
-        target = (ROOT / link.split("#")[0].split("?")[0]).resolve()
-        if not target.exists():
+        relative = link.split("#")[0].split("?")[0]
+        if not relative:
+            continue
+        if not resolves_case_sensitively(ROOT, relative):
             failures.append(f"{name}: link {link!r} does not resolve")
 
-    coming_blob = " ".join(parser.coming_text)
-    for feature in UNSHIPPED:
-        occurrences = len(re.findall(re.escape(feature), raw))
-        labelled = len(re.findall(re.escape(feature), coming_blob))
+    full_text = " ".join(text for text, _ in parser.text_chunks)
+    coming_text = " ".join(text for text, in_coming in parser.text_chunks if in_coming)
+    for word in UNSHIPPED_WORDS:
+        pattern = re.compile(r"\b" + re.escape(word) + r"\b", re.IGNORECASE)
+        occurrences = len(pattern.findall(full_text))
+        labelled = len(pattern.findall(coming_text))
         if occurrences > labelled:
             failures.append(
-                f'{name}: {feature!r} appears outside an element with '
+                f'{name}: {word!r} appears outside an element with '
                 f'data-status="coming" — it is not built yet'
             )
 

@@ -309,7 +309,7 @@ img { max-width: 100%; height: auto; display: block; }
   padding: 3px 12px;
   border-radius: 999px;
   background: var(--glow);
-  color: #fff;
+  color: #0A0A0A;
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.1em;
