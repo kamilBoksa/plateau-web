@@ -12,6 +12,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PAGES = ["index.html", "privacy.html", "terms.html"]
 
+# Every file that can carry a placeholder token — a superset of PAGES.
+# sitemap.xml and robots.txt are not HTML, so they must stay out of PAGES
+# (PageParser would choke on them), but they still need the token scan below.
+TOKEN_SCAN_FILES = PAGES + ["sitemap.xml", "robots.txt"]
+
 # Claims that must never reach production.
 FORBIDDEN = {
     "700+": "the library holds 72 exercises, not 700+",
@@ -133,7 +138,7 @@ def main():
 
     for token in ALLOWED_TOKENS:
         hits = sum(
-            1 for name in PAGES
+            1 for name in TOKEN_SCAN_FILES
             if (ROOT / name).exists() and token in (ROOT / name).read_text(encoding="utf-8")
         )
         if hits:
