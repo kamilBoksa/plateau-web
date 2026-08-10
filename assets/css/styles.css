@@ -258,6 +258,68 @@ img { max-width: 100%; height: auto; display: block; }
   .feature--reverse .feature__media { order: -1; justify-self: start; }
 }
 
+.plans {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr;
+  margin-top: 40px;
+}
+.plan { position: relative; }
+.plan--pro { border-color: rgba(66, 133, 244, 0.45); box-shadow: 0 0 60px rgba(66, 133, 244, 0.10); }
+.plan__tagline { color: var(--text-dim); font-size: 0.9375rem; }
+.plan__group {
+  margin: 24px 0 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.plan__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.plan__list li {
+  position: relative;
+  padding-left: 28px;
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+}
+.plan__list li strong { color: var(--text); font-weight: 600; }
+.plan__list li::before {
+  content: '';
+  position: absolute;
+  left: 2px; top: 0.5em;
+  width: 14px; height: 8px;
+  border-left: 2px solid var(--affirm);
+  border-bottom: 2px solid var(--affirm);
+  transform: rotate(-45deg);
+}
+/* Unshipped features read as pending, not delivered. */
+.plan__list--muted li::before {
+  border-color: var(--text-dim);
+  border-bottom: none;
+  border-left: none;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px var(--text-dim);
+  transform: none;
+  top: 0.55em;
+}
+.badge {
+  position: absolute;
+  top: -11px; right: 20px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--glow);
+  color: #fff;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 860px) {
+  .plans { grid-template-columns: 1fr 1fr; align-items: start; }
+}
+
 /* Must stay last: overrides motion declared anywhere above it by source
    order, not specificity, so nothing appended after this block can escape it. */
 @media (prefers-reduced-motion: reduce) {
