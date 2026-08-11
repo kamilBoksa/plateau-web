@@ -401,28 +401,29 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 0 var(--radius) var(--radius) 0;
 }
 
-/* Official store artwork, used unmodified as both vendors' guidelines require.
-   Apple's SVG is all badge; Google's PNG bakes its mandated clear space into
-   the canvas, which is why the two are given different heights — 1.4881x — so
-   the visible badges end up the same size beside each other. */
+/* Official store artwork. Google ships its badge with ~1/4-height transparent
+   padding baked into the canvas and Apple does not, so pairing the files
+   as-downloaded left the row lopsided: a 22px optical gap against a 12px rule,
+   and Apple flush to the container while Google sat inset. The Google PNG is
+   therefore cropped to its own content box — the trademark itself untouched —
+   and the clear space both vendors require is supplied here in CSS instead.
+   That keeps the two badges the same height and both flush to the text above. */
 .store-badges {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
+  gap: 16px;                /* > 1/4 badge height, Google's stated minimum */
   margin-block: 28px 20px;
 }
 .store-badges a {
   display: inline-flex;
   border-radius: 8px;
 }
-.store-badges img { display: block; }
-.store-badges .badge-apple  { height: 40px; width: auto; }
-.store-badges .badge-google { height: 60px; width: auto; }
+.store-badges img { display: block; height: 40px; width: auto; }
 
 @media (max-width: 400px) {
-  .store-badges .badge-apple  { height: 36px; }
-  .store-badges .badge-google { height: 54px; }
+  .store-badges { gap: 14px; }
+  .store-badges img { height: 36px; }
 }
 
 .download { text-align: center; }

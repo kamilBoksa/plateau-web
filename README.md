@@ -50,10 +50,17 @@ against the live RevenueCat products.
 
 **Store badges.** `assets/img/badge-app-store.svg` and
 `assets/img/badge-google-play.png` are the official artwork from Apple and
-Google, committed unmodified as both vendors' guidelines require. Google's PNG
-bakes its mandated clear space into the canvas, which is why the two are given
-different CSS heights — a 1.4881 ratio — so the visible badges match. The
-trademark attribution in the footer is a Google requirement; do not drop it.
+Google. The badges themselves are untouched, but Google ships its PNG with
+about a quarter of the badge height as transparent padding baked into the
+canvas, and Apple does not — pairing the two files as downloaded left the row
+lopsided, with a 22px optical gap against a 12px rule and Apple flush to the
+container while Google sat inset. The Google file is therefore cropped to its
+own content box, both badges are set to the same CSS height, and the clear
+space both vendors require comes from the 16px flex gap instead. If you ever
+re-download the asset, crop it again or the row will drift.
+
+The trademark attribution in the footer is a Google requirement; do not drop
+it.
 
 **Social card.**
 
