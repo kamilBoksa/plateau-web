@@ -32,6 +32,27 @@ FORBIDDEN = {
 # data-status="coming".
 UNSHIPPED_WORDS = ["csv", "export"]
 
+# The app ships, so pre-launch framing is now a defect rather than the point.
+# Matched against rendered text like UNSHIPPED_WORDS, for the same reason:
+# a raw-HTML scan is defeated by entities and inline tags. These are whole
+# phrases on purpose — a bare "coming" would fire on the "See the plateau
+# coming." heading and on the "Coming to Pro" group label, both of which are
+# product copy and must survive.
+FORBIDDEN_PHRASES = {
+    "coming soon": "the app is released; nothing is coming soon",
+    "notify me": "leftover waitlist call to action",
+    "at launch": "launch-tense wording; say what is true now",
+    "waitlist": "there is no waitlist",
+    "pre-launch": "leftover pre-launch framing",
+}
+
+# The download path is the page's whole purpose, so its absence is a failure.
+# Nothing else can catch this: external links are never resolved, so a removed
+# store link would otherwise pass silently.
+REQUIRED_STORE_LINKS = {
+    "index.html": ["apps.apple.com", "play.google.com"],
+}
+
 # Intentional placeholders, resolved at launch and documented in the README.
 ALLOWED_TOKENS = ["PLATEAU_CONTACT_EMAIL"]
 
@@ -60,6 +81,7 @@ class PageParser(HTMLParser):
         self.has_description = False
         self.images = []          # (src, alt)
         self.local_links = []     # href/src values pointing inside the repo
+        self.external_links = []  # absolute http(s) targets, for presence checks
         self.text_chunks = []     # (text, in_coming) for every text node
         self._in_title = False
         self._coming_stack = []
@@ -78,7 +100,11 @@ class PageParser(HTMLParser):
             self.images.append((attrs.get("src", ""), attrs.get("alt")))
         for key in ("href", "src"):
             value = attrs.get(key, "")
-            if value and not value.startswith(("http://", "https://", "mailto:", "#", "data:")):
+            if not value:
+                continue
+            if value.startswith(("http://", "https://")):
+                self.external_links.append(value)
+            elif not value.startswith(("mailto:", "#", "data:")):
                 self.local_links.append(value)
         if tag in VOID:
             return
@@ -166,8 +192,22 @@ def check_page(name, failures):
         if not resolves_case_sensitively(ROOT, relative):
             failures.append(f"{name}: link {link!r} does not resolve")
 
+    for host in REQUIRED_STORE_LINKS.get(name, []):
+        if not any(host in link for link in parser.external_links):
+            failures.append(
+                f"{name}: no link to {host} — the download path is missing"
+            )
+
     full_text = " ".join(text for text, _ in parser.text_chunks)
     coming_text = " ".join(text for text, in_coming in parser.text_chunks if in_coming)
+
+    # Collapse runs of whitespace so a phrase split across a line break in the
+    # source still reads as one phrase here.
+    flat_text = re.sub(r"\s+", " ", full_text)
+    for phrase, reason in FORBIDDEN_PHRASES.items():
+        if re.search(r"\b" + re.escape(phrase).replace(r"\ ", " ") + r"\b", flat_text, re.IGNORECASE):
+            failures.append(f"{name}: says {phrase!r} — {reason}")
+
     for word in UNSHIPPED_WORDS:
         pattern = re.compile(r"\b" + re.escape(word) + r"\b", re.IGNORECASE)
         occurrences = len(pattern.findall(full_text))

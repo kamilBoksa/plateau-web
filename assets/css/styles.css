@@ -401,6 +401,34 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 0 var(--radius) var(--radius) 0;
 }
 
+/* Official store artwork, used unmodified as both vendors' guidelines require.
+   Apple's SVG is all badge; Google's PNG bakes its mandated clear space into
+   the canvas, which is why the two are given different heights — 1.4881x — so
+   the visible badges end up the same size beside each other. */
+.store-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-block: 28px 20px;
+}
+.store-badges a {
+  display: inline-flex;
+  border-radius: 8px;
+}
+.store-badges img { display: block; }
+.store-badges .badge-apple  { height: 40px; width: auto; }
+.store-badges .badge-google { height: 60px; width: auto; }
+
+@media (max-width: 400px) {
+  .store-badges .badge-apple  { height: 36px; }
+  .store-badges .badge-google { height: 54px; }
+}
+
+.download { text-align: center; }
+.download .store-badges { justify-content: center; }
+.download p { margin-inline: auto; }
+
 /* Must stay last: overrides motion declared anywhere above it by source
    order, not specificity, so nothing appended after this block can escape it. */
 @media (prefers-reduced-motion: reduce) {

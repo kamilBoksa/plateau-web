@@ -4,23 +4,23 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Plateau — Break through the plateau</title>
-  <meta name="description" content="Plateau is a strength tracker that shows you when you have stopped progressing — and what to do about it. Unlimited workouts, unlimited history, no ads.">
+  <meta name="description" content="Plateau is a strength tracker for iPhone and Android that shows you when you have stopped progressing — and what to do about it. Free to download: unlimited workouts, unlimited history, no ads.">
   <link rel="canonical" href="https://getplateau.app/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Plateau">
   <meta property="og:title" content="Plateau — Break through the plateau">
-  <meta property="og:description" content="The strength tracker that shows you when you've stopped progressing. Unlimited workouts and full history, free — no caps, no ads.">
+  <meta property="og:description" content="The strength tracker that shows you when you've stopped progressing. Free on iPhone and Android — unlimited workouts and full history, no caps, no ads.">
   <meta property="og:url" content="https://getplateau.app/">
   <meta property="og:image" content="https://getplateau.app/assets/img/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Plateau — Break through the plateau">
-  <meta name="twitter:description" content="The strength tracker that shows you when you've stopped progressing. Unlimited workouts and full history, free — no caps, no ads.">
+  <meta name="twitter:description" content="The strength tracker that shows you when you've stopped progressing. Free on iPhone and Android — unlimited workouts and full history, no caps, no ads.">
   <meta name="twitter:image" content="https://getplateau.app/assets/img/og.png">
   <meta name="theme-color" content="#0A0A0A">
   <link rel="icon" href="assets/img/logo.webp" type="image/webp">
-  <!-- PRICES: reconcile with the RevenueCat products before launch. -->
+  <!-- PRICES: reconcile against the live RevenueCat products. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -30,10 +30,14 @@
     "operatingSystem": "iOS, Android",
     "description": "A strength-training tracker with unlimited workout logging, full history and per-exercise progress analytics.",
     "url": "https://getplateau.app/",
+    "installUrl": [
+      "https://apps.apple.com/app/id6752913552",
+      "https://play.google.com/store/apps/details?id=boxa.dev.gymnotes.app"
+    ],
     "offers": [
-      { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "USD" },
-      { "@type": "Offer", "name": "Pro Monthly", "price": "4.99", "priceCurrency": "USD" },
-      { "@type": "Offer", "name": "Pro Annual", "price": "29.99", "priceCurrency": "USD" }
+      { "@type": "Offer", "name": "Free", "price": "0", "priceCurrency": "USD", "availability": "https://schema.org/InStock" },
+      { "@type": "Offer", "name": "Pro Monthly", "price": "4.99", "priceCurrency": "USD", "availability": "https://schema.org/InStock" },
+      { "@type": "Offer", "name": "Pro Annual", "price": "29.99", "priceCurrency": "USD", "availability": "https://schema.org/InStock" }
     ]
   }
   </script>
@@ -51,7 +55,7 @@
         <img src="assets/img/logo.webp" width="28" height="28" alt="Plateau logo">
         <span>PLATEAU</span>
       </a>
-      <a class="btn btn--primary btn--sm" href="mailto:support@getplateau.app?subject=Notify%20me%20when%20Plateau%20launches">Notify me</a>
+      <a class="btn btn--primary btn--sm" href="#download">Get the app</a>
     </div>
   </header>
 
@@ -59,15 +63,22 @@
     <section class="hero">
       <div class="container hero__inner">
         <div class="hero__copy">
-          <p class="eyebrow">Coming soon to iOS &amp; Android</p>
+          <p class="eyebrow">Free on iPhone and Android</p>
           <h1>Break through the plateau.</h1>
           <p class="lede">The strength tracker that shows you when you&rsquo;ve stopped
             progressing &mdash; and what to do about it.</p>
-          <div class="hero__actions">
-            <a class="btn btn--primary" href="mailto:support@getplateau.app?subject=Notify%20me%20when%20Plateau%20launches">Notify me at launch</a>
-            <a class="btn btn--ghost" href="#plans">See what&rsquo;s free</a>
+          <div class="store-badges">
+            <a href="https://apps.apple.com/app/id6752913552">
+              <img class="badge-apple" src="assets/img/badge-app-store.svg" width="120" height="40"
+                   alt="Download Plateau on the App Store">
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=boxa.dev.gymnotes.app">
+              <img class="badge-google" src="assets/img/badge-google-play.png" width="155" height="60"
+                   alt="Get Plateau on Google Play">
+            </a>
           </div>
-          <p class="hero__note">Unlimited workouts and full history, free — no caps, no ads.</p>
+          <p class="hero__note">Unlimited workouts and full history, free — no caps, no ads.
+            <a href="#plans">See what&rsquo;s free</a>.</p>
         </div>
         <div class="hero__shot">
           <div class="phone">
@@ -213,7 +224,7 @@
             <span class="badge">Pro</span>
             <h3>Pro</h3>
             <p class="plan__tagline">Everything in Free, plus the analysis that tells you what to change.</p>
-            <p class="plan__group">At launch</p>
+            <p class="plan__group">Included in Pro</p>
             <ul class="plan__list">
               <li><strong>Strength Dashboard</strong> &mdash; volume split by muscle group and a strength rating across your whole programme</li>
               <li><strong>Program Builder</strong> &mdash; multi-week plans that progress the weight for you</li>
@@ -236,7 +247,7 @@
           Subscribe if the analysis is worth it to you &mdash; otherwise keep using
           Plateau for nothing, indefinitely.</p>
 
-        <!-- PRICES: reconcile with the RevenueCat products before launch. -->
+        <!-- PRICES: reconcile against the live RevenueCat products. -->
         <div class="prices">
           <div class="card price">
             <h3>Monthly</h3>
@@ -252,8 +263,15 @@
         </div>
         <!-- /PRICES -->
 
-        <div class="hero__actions">
-          <a class="btn btn--primary" href="mailto:support@getplateau.app?subject=Notify%20me%20when%20Plateau%20launches">Notify me at launch</a>
+        <div class="store-badges">
+          <a href="https://apps.apple.com/app/id6752913552">
+            <img class="badge-apple" src="assets/img/badge-app-store.svg" width="120" height="40"
+                 alt="Download Plateau on the App Store">
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=boxa.dev.gymnotes.app">
+            <img class="badge-google" src="assets/img/badge-google-play.png" width="155" height="60"
+                 alt="Get Plateau on Google Play">
+          </a>
         </div>
       </div>
     </section>
@@ -281,20 +299,40 @@
               the first time you view them.</p>
           </details>
           <details>
-            <summary>When does it launch?</summary>
-            <p>Plateau is in the final stretch before submission to the App Store and
-              Google Play. Leave your email and you&rsquo;ll hear the day it&rsquo;s live &mdash;
-              nothing else.</p>
+            <summary>How do I cancel Pro?</summary>
+            <p>In your App Store or Google Play account settings, not in the app.
+              Cancelling stops the next renewal; the period you have already paid for
+              runs to its end. Refunds go through Apple or Google under their own
+              policies.</p>
           </details>
           <details>
-            <summary>Which platforms?</summary>
-            <p>iPhone and Android at launch, from a single codebase.</p>
+            <summary>Which devices?</summary>
+            <p>iPhone and Android, from a single codebase.</p>
           </details>
           <details data-status="coming">
             <summary>Can I get my data out?</summary>
             <p>CSV Export is on the Pro roadmap and is not built yet. Until it ships,
               your log lives in a standard database on your own device.</p>
           </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="section download reveal" id="download">
+      <div class="container">
+        <p class="eyebrow">Get Plateau</p>
+        <h2>Start logging today.</h2>
+        <p class="lede">Free to download, free to keep using. Pro is there when you want
+          the analysis on top.</p>
+        <div class="store-badges">
+          <a href="https://apps.apple.com/app/id6752913552">
+            <img class="badge-apple" src="assets/img/badge-app-store.svg" width="120" height="40"
+                 alt="Download Plateau on the App Store">
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=boxa.dev.gymnotes.app">
+            <img class="badge-google" src="assets/img/badge-google-play.png" width="155" height="60"
+                 alt="Get Plateau on Google Play">
+          </a>
         </div>
       </div>
     </section>
@@ -311,7 +349,9 @@
         <a href="terms.html">Terms</a>
         <a href="mailto:support@getplateau.app">Contact</a>
       </nav>
-      <p class="site-footer__note">&copy; 2026 Plateau. Built for people who log every set.</p>
+      <p class="site-footer__note">&copy; 2026 Plateau. Built for people who log every set.<br>
+        Apple and the Apple logo are trademarks of Apple Inc. Google Play and the Google Play
+        logo are trademarks of Google LLC.</p>
     </div>
   </footer>
 
