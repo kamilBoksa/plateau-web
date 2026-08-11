@@ -19,7 +19,7 @@ and malformed page metadata. CI runs it on every push.
 
 The site publishes from `main` via GitHub Actions
 (`.github/workflows/pages.yml`) to
-[`https://kamilboksa.github.io/plateau-web/`](https://kamilboksa.github.io/plateau-web/).
+[`https://getplateau.app/`](https://getplateau.app/).
 Every push to `main` runs `tools/check.py` as a gate before the deploy job
 runs, so a push that would publish a false claim fails before it reaches
 Pages.

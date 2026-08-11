@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kamilboksa.github.io/plateau-web/sitemap.xml
+Sitemap: https://getplateau.app/sitemap.xml
