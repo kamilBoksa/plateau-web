@@ -26,7 +26,7 @@
   <main class="legal" id="main">
     <div class="container">
       <h1>Privacy Policy</h1>
-      <p class="legal__updated">Last updated 10 August 2026</p>
+      <p class="legal__updated">Last updated 22 August 2026</p>
 
       <p>Plateau is a strength-training log. This policy explains what the app
         collects, why, and who else can see it. It is short because the app does
@@ -36,8 +36,9 @@
       <ul>
         <li><strong>Account details.</strong> Your email address and an account
           identifier, handled by Google Firebase Authentication. If you sign in with
-          Apple or Google, we receive whatever that provider passes on — normally an
-          email address, or Apple&rsquo;s relay address if you chose to hide yours.</li>
+          Apple or Google, we receive whatever that provider passes on — typically an
+          email address (or Apple&rsquo;s relay address if you chose to hide yours) and,
+          if you allow it, the name on your account.</li>
         <li><strong>Your workouts.</strong> Exercises, sets, weights, repetitions,
           notes, templates and workout history.</li>
         <li><strong>Subscription status.</strong> Whether a Pro subscription is
@@ -46,10 +47,16 @@
       </ul>
 
       <h2>Where your workouts live</h2>
-      <p>Your training data is stored in a database on your own device and is not
-        uploaded to us. Deleting the app deletes that data. Cloud Backup &amp; Sync is
-        an optional Pro feature; if and when you turn it on, this policy will be
-        updated to describe exactly what is transmitted, before it transmits anything.</p>
+      <p>By default, your training data is stored in a database on your own device and
+        is not uploaded to us. Deleting the app deletes that data.</p>
+      <p><strong>Cloud Backup &amp; Sync</strong> is a Pro feature that turns on
+        automatically once your subscription is active — there is no separate switch
+        to flip. While it is on, your exercises, sets, weights, repetitions, notes,
+        templates and workout history are copied to a private, per-account store in
+        Google Firestore, scoped so only your signed-in account can read or write it.
+        If you cancel or let your Pro subscription lapse, syncing stops but data
+        already uploaded is not automatically deleted from Firestore; delete your
+        account (see &ldquo;Your rights&rdquo; below) to remove it.</p>
 
       <h2>What we do not do</h2>
       <ul>
@@ -61,8 +68,10 @@
 
       <h2>Who processes data on our behalf</h2>
       <ul>
-        <li><strong>Google Firebase</strong> — authentication, and delivery of the
-          exercise animation files. Requests for animations reach Google&rsquo;s servers.</li>
+        <li><strong>Google Firebase</strong> — authentication, delivery of the
+          exercise animation files, and (for Pro subscribers with Cloud Backup &amp;
+          Sync active) storage of your synced workout data in Firestore. Requests
+          reach Google&rsquo;s servers.</li>
         <li><strong>RevenueCat</strong> — subscription entitlement state.</li>
         <li><strong>Apple App Store / Google Play</strong> — payment processing and
           subscription management.</li>
@@ -70,10 +79,11 @@
 
       <h2>Your rights</h2>
       <p>You can delete your account from within the app, which removes your
-        authentication record and the workout data held on the device. If you are in
-        the EU or UK, the GDPR additionally gives you rights of access, rectification,
-        erasure, restriction, portability and objection. Write to us and we will act
-        on it.</p>
+        authentication record, the workout data held on the device, and — if Cloud
+        Backup &amp; Sync was ever active — the copy of that data held in Firestore.
+        If you are in the EU or UK, the GDPR additionally gives you rights of access,
+        rectification, erasure, restriction, portability and objection. Write to us
+        and we will act on it.</p>
 
       <h2>Children</h2>
       <p>Plateau is not directed at children under 13, and we do not knowingly collect
