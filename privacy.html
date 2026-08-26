@@ -50,6 +50,12 @@
         <li><strong>Subscription status.</strong> Whether a Pro subscription is
           active, managed through RevenueCat. We never see your card details; those
           stay with Apple or Google.</li>
+        <li><strong>Technical data our providers need to run.</strong> When the app
+          talks to Firebase or RevenueCat, those services necessarily see your IP
+          address, device type and operating system version, and generate an
+          app-instance identifier. We do not use any of this to build a profile of
+          you, and we do not combine it with your workout data. It is a by-product
+          of the app connecting to a server at all.</li>
       </ul>
 
       <h2>Legal basis for processing</h2>
@@ -103,6 +109,25 @@
         appropriate safeguards, such as Standard Contractual Clauses or the
         EU-U.S. Data Privacy Framework.</p>
 
+      <h2>How long we keep it</h2>
+      <p>Your account details and any synced workout data are kept for as long as
+        your account exists. Delete the account and they go, as described below.
+        Workout data on your device stays there until you delete the app or the
+        account. Our payment providers keep transaction records for as long as their
+        own tax and accounting obligations require, independently of us.</p>
+
+      <h2>How we protect it</h2>
+      <p>Your synced data sits in a per-account area of Google Firestore that the
+        security rules only let your own signed-in account read or write. Traffic
+        between the app and our providers is encrypted in transit. No system is
+        perfectly secure, and we cannot promise that one is.</p>
+
+      <h2>Automated decision-making</h2>
+      <p>The app calculates statistics from what you log — estimated one-rep maxes,
+        volume, a strength rating. These are arithmetic shown back to you. We do not
+        use them, or anything else, to make automated decisions that produce legal or
+        similarly significant effects for you, and we do not profile you.</p>
+
       <h2>Your rights</h2>
       <p>You can delete your account from within the app, which removes your
         authentication record, the workout data held on the device, and — if Cloud
@@ -115,12 +140,20 @@
       </p>
 
       <h2>Children</h2>
-      <p>Plateau is not directed at children under 13, and we do not knowingly collect
-        their data.</p>
+      <p>Plateau is not directed at young children. You need to be at least 16 to
+        create an account on your own; if you are between 13 and 15, you may only use
+        Plateau with the consent of a parent or guardian, who accepts the
+        <a href="terms.html">Terms of Service</a> on your behalf. We do not knowingly
+        collect data from children under 13. If you believe a child under 13 has given
+        us data, write to us and we will delete it.</p>
 
       <h2>Changes</h2>
-      <p>If this policy changes materially, the date at the top changes and the app
-        will tell you before the new version takes effect.</p>
+      <p>If this policy changes, the date at the top changes with it. If the change
+        is material — a new category of data, a new recipient, a new purpose — we will
+        give reasonable notice before it takes effect, by email to the address on your
+        account or by a notice in the app, and where the law requires your consent we
+        will ask for it rather than assume it. Otherwise, the current version is
+        always the one on this page.</p>
 
       <h2>Contact</h2>
       <p>Plateau is developed by Kamil Boksa, ul. Majora Sucharskiego 13, 33-180
