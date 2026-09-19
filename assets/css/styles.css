@@ -411,7 +411,7 @@ img { max-width: 100%; height: auto; display: block; }
 .store-badges {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   gap: 16px;                /* > 1/4 badge height, Google's stated minimum */
   margin-block: 28px 20px;
 }
@@ -420,6 +420,26 @@ img { max-width: 100%; height: auto; display: block; }
   border-radius: 8px;
 }
 .store-badges img { display: block; height: 40px; width: auto; }
+
+.store-badge--soon {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  cursor: default;
+}
+.store-badge--soon img { filter: grayscale(1); opacity: 0.5; }
+.store-badge__tag {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
 
 @media (max-width: 400px) {
   .store-badges { gap: 14px; }
