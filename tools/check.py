@@ -37,20 +37,24 @@ UNSHIPPED_WORDS = ["csv", "export"]
 # a raw-HTML scan is defeated by entities and inline tags. These are whole
 # phrases on purpose — a bare "coming" would fire on the "See the plateau
 # coming." heading and on the "Coming to Pro" group label, both of which are
-# product copy and must survive.
+# product copy and must survive. "coming soon" is the one phrase that can
+# legitimately survive per-platform: allowed the same way UNSHIPPED_WORDS is,
+# only inside an element carrying data-status="coming".
 FORBIDDEN_PHRASES = {
-    "coming soon": "the app is released; nothing is coming soon",
+    "coming soon": "a platform that has actually shipped may not say this",
     "notify me": "leftover waitlist call to action",
     "at launch": "launch-tense wording; say what is true now",
     "waitlist": "there is no waitlist",
     "pre-launch": "leftover pre-launch framing",
 }
+EXEMPT_PHRASES = {"coming soon"}
 
 # The download path is the page's whole purpose, so its absence is a failure.
 # Nothing else can catch this: external links are never resolved, so a removed
-# store link would otherwise pass silently.
+# store link would otherwise pass silently. Android has no live listing yet —
+# add "play.google.com" back here once it does.
 REQUIRED_STORE_LINKS = {
-    "index.html": ["apps.apple.com", "play.google.com"],
+    "index.html": ["apps.apple.com"],
 }
 
 # Intentional placeholders, resolved at launch and documented in the README.
@@ -204,8 +208,18 @@ def check_page(name, failures):
     # Collapse runs of whitespace so a phrase split across a line break in the
     # source still reads as one phrase here.
     flat_text = re.sub(r"\s+", " ", full_text)
+    flat_coming_text = re.sub(r"\s+", " ", coming_text)
     for phrase, reason in FORBIDDEN_PHRASES.items():
-        if re.search(r"\b" + re.escape(phrase).replace(r"\ ", " ") + r"\b", flat_text, re.IGNORECASE):
+        pattern = re.compile(r"\b" + re.escape(phrase).replace(r"\ ", " ") + r"\b", re.IGNORECASE)
+        if phrase in EXEMPT_PHRASES:
+            occurrences = len(pattern.findall(flat_text))
+            labelled = len(pattern.findall(flat_coming_text))
+            if occurrences > labelled:
+                failures.append(
+                    f'{name}: says {phrase!r} outside an element with '
+                    f'data-status="coming" — {reason}'
+                )
+        elif pattern.search(flat_text):
             failures.append(f"{name}: says {phrase!r} — {reason}")
 
     for word in UNSHIPPED_WORDS:
