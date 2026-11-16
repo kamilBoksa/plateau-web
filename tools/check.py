@@ -19,7 +19,7 @@ TOKEN_SCAN_FILES = PAGES + ["sitemap.xml", "robots.txt"]
 
 # Claims that must never reach production.
 FORBIDDEN = {
-    "700+": "the library holds 72 exercises, not 700+",
+    "700+": "the library holds 235 exercises, not 700+",
     "example.com": "placeholder legal link",
     "lorem ipsum": "placeholder copy",
     "TODO": "unfinished content",
